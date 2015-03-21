@@ -1,0 +1,25 @@
+{
+  "name": "to-async-function",
+  "version": "0.1.0",
+  "description": "Create an async function from anything (promise, stream, object)",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/reminyborg/to-async-function.git"
+  },
+  "keywords": [
+    "async function",
+    "callback",
+    "stream",
+    "promise"
+  ],
+  "author": "Remi Nyborg <remi@nyborg.priv.no>",
+  "license": "MIT",
+  "devDependencies": {
+    "promise": "^6.1.0",
+    "tape": "^3.5.0"
+  }
+}
