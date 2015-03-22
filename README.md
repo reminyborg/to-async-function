@@ -1,6 +1,9 @@
 # to-async-function
 Create a async function from anything (promises, streams, objects and async functions)
 
+[![browser support](https://ci.testling.com/reminyborg/to-async-function.png)
+](https://ci.testling.com/reminyborg/to-async-function)
+
 ## Install
 ```
 npm install --save to-async-function
@@ -10,7 +13,6 @@ npm install --save to-async-function
 To convert any type of dataSources to async function
 ```javascript
 var toAsyncFunction = require('to-async-function');
-
 
 var dataSource; // can be promises, streams, objects and async functions
 var converted = toAsyncFunction(dataSource);
