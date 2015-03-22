@@ -33,13 +33,13 @@ test('stream',function(t){
   });
 });
 
-/*test('promise',function(t){
+test('promise',function(t){
   t.plan(1);
   var promise = new Promise.resolve([1,2,3,4]);
   toaf(promise)(function(err,data){
     t.deepEqual(data,[1,2,3,4]);
   });
-});*/
+});
 
 test('object',function(t){
   t.plan(1);

@@ -1,36 +1,62 @@
 function toAsyncFunction(source) {
-  // is it already an async function
+  // source is already an async function - return
   if(typeof source == 'function') {
     return source;
-  // is a stream
   } else if(isFunction(source._read) && typeof (source._readableState === 'object')) {
-    // get all data from stream and return with callback
-    return function (cb){
-      var buffer = [];
-      source.on('data',function(data){
-        buffer.push(data);
-      });
-      source.on('error',function(err){
-        cb(err);
-      });
-      source.on('end',function(){
-        cb(null,buffer);
-      });
-    };
-  /*} else if(isFunction(source.then)) {
-    return function(cb){
-      source.then(function(data){
-        cb(err,data);
-        return data;
-      },function(err){
-        cb(err);
-      });
-    };*/
+    // source is a stream - convert
+    return streamToAsyncFunction(source);
+
+  } else if(isFunction(source.then)) {
+    // source is a promise - convert
+    return promiseToAsyncFunction(source);
+
   } else {
+    // any thing else (object, property ...) - wrap
     return function (cb){
       cb(null,source);
     };
   }
+}
+
+// push all data from a stream to an array and return it with a callback
+function streamToAsyncFunction(stream) {
+  return function (cb){
+    var buffer = [];
+    stream.on('data',function(data){
+      buffer.push(data);
+    });
+    stream.on('error',function(err){
+      cb(err);
+    });
+    stream.on('end',function(){
+      cb(null,buffer);
+    });
+  };
+}
+
+function promiseToAsyncFunction(promise) {
+  // is a promise
+  // listen to the promise and buffer data if received
+  var buffer;
+  var error;
+  promise.then(function(data){
+    buffer = data;
+    return data;
+  },function(error){
+    error = data;
+  });
+  return function(cb){
+    if(typeof buffer !== 'undefined' || typeof error !== 'undefined') {
+      cb(error,buffer);
+    } else {
+      promise.then(function(data){
+        cb(null,buffer);
+        return data;
+      },function(error){
+        cb(error);
+      });
+    }
+  };
 }
 
 function isFunction(functionToCheck) {
