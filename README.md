@@ -14,18 +14,18 @@ To convert any type of dataSources to async function
 ```javascript
 var toAsyncFunction = require('to-async-function');
 
-var dataSource; // can be promises, streams, objects and async functions
+var dataSource; // can be a promise, stream, object/property and async function
 var converted = toAsyncFunction(dataSource);
 
 converted(function(err,data){
-  // will return when dataSource data is ready
+  // will return when data is ready
 
-  // err: datasource reported errors if applicable
-  // data: data returned from
+  // err: reported errors if applicable
+  // data: data returned
 });
 ```
 
-To create a lib that can take any type of external data source promises, streams, etc... :
+To create a lib that can take any type of external data. promises, streams, etc... :
 ```javascript
 var toAsyncFunction = require('to-async-function');
 
